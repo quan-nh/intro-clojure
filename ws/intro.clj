@@ -2,6 +2,10 @@
 
 ;; **
 ;;; # Intro to Clojure
+;;; 
+;;; - LISP on JVM
+;;; - dynamic language
+;;; - functional language
 ;; **
 
 ;; **
@@ -13,9 +17,7 @@
 ;; @@
 
 ;; **
-;;; - LISP on JVM
-;;; - dynamic
-;;; - functional
+;;; 
 ;; **
 
 ;; **
@@ -84,7 +86,7 @@ m
 ;; @@
 
 ;; **
-;;; ## functional
+;;; ## functions
 ;; **
 
 ;; @@
@@ -92,8 +94,13 @@ m
   (+ x y))
 ;; @@
 
+;; **
+;;; ![map reduce](https://pbs.twimg.com/media/DwhKw_MVsAAsNXs?format=jpg&name=small)
+;; **
+
 ;; @@
 (map inc [1 2 3])
+(filter even? [1 2 3])
 (reduce + 10 [1 2 3])
 ;; @@
 
@@ -108,9 +115,6 @@ Math/PI
 
 (.toString (java.util.Date.))
 ;; @@
-;; =>
-;;; {"type":"html","content":"<span class='clj-string'>&quot;Sat Jan 05 15:39:36 ICT 2019&quot;</span>","value":"\"Sat Jan 05 15:39:36 ICT 2019\""}
-;; <=
 
 ;; **
 ;;; ## http client
@@ -130,10 +134,10 @@ Math/PI
 ;; @@
 
 ;; @@
-(def wzers (:body (http/get "https://api.github.com/orgs/wizeline/members"
+(def wizers (:body (http/get "https://api.github.com/orgs/wizeline/members"
                               {:as :json})))
 
-(print-table (map #(select-keys % [:id :login :avatar_url]) wzers))
+(print-table (map #(select-keys % [:id :login :avatar_url]) wizers))
 ;; @@
 ;; ->
 ;;; 
@@ -169,15 +173,20 @@ Math/PI
 (require '[gorilla-repl.table :refer [table-view]]
          '[gorilla-repl.html :refer [html-view]]
          '[hiccup.core :refer [html]])
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
 
-(->> wzers
-     (map (fn [wzer]
-            [(:id wzer)
-             (:login wzer)
+;; @@
+(->> wizers
+     (map (fn [wizer]
+            [(:id wizer)
+             (:login wizer)
              (html-view (html [:img
                                {:width "100"
                                 :height "100"
-                                :src (:avatar_url wzer)}]))]))
+                                :src (:avatar_url wizer)}]))]))
   	 table-view)
 ;; @@
 ;; =>
